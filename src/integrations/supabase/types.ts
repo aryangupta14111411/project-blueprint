@@ -14,7 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      claims: {
+        Row: {
+          approved_at: string | null
+          claimed_at: string
+          deal_id: string
+          id: string
+          status: Database["public"]["Enums"]["claim_status"] | null
+          user_id: string
+        }
+        Insert: {
+          approved_at?: string | null
+          claimed_at?: string
+          deal_id: string
+          id?: string
+          status?: Database["public"]["Enums"]["claim_status"] | null
+          user_id: string
+        }
+        Update: {
+          approved_at?: string | null
+          claimed_at?: string
+          deal_id?: string
+          id?: string
+          status?: Database["public"]["Enums"]["claim_status"] | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claims_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deals: {
+        Row: {
+          category: Database["public"]["Enums"]["deal_category"]
+          claim_instructions: string
+          created_at: string
+          description: string
+          discount: string
+          eligibility_rules: string[] | null
+          expires_at: string | null
+          id: string
+          is_locked: boolean | null
+          max_claims: number | null
+          original_price: string | null
+          partner_logo: string
+          partner_name: string
+          partner_website: string
+          short_description: string
+          title: string
+          total_claims: number | null
+          updated_at: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["deal_category"]
+          claim_instructions: string
+          created_at?: string
+          description: string
+          discount: string
+          eligibility_rules?: string[] | null
+          expires_at?: string | null
+          id?: string
+          is_locked?: boolean | null
+          max_claims?: number | null
+          original_price?: string | null
+          partner_logo: string
+          partner_name: string
+          partner_website: string
+          short_description: string
+          title: string
+          total_claims?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["deal_category"]
+          claim_instructions?: string
+          created_at?: string
+          description?: string
+          discount?: string
+          eligibility_rules?: string[] | null
+          expires_at?: string | null
+          id?: string
+          is_locked?: boolean | null
+          max_claims?: number | null
+          original_price?: string | null
+          partner_logo?: string
+          partner_name?: string
+          partner_website?: string
+          short_description?: string
+          title?: string
+          total_claims?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_verified: boolean | null
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_verified?: boolean | null
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_verified?: boolean | null
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +150,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      claim_status: "pending" | "approved" | "rejected"
+      deal_category:
+        | "cloud"
+        | "marketing"
+        | "analytics"
+        | "productivity"
+        | "design"
+        | "developer-tools"
+        | "communication"
+        | "finance"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +286,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      claim_status: ["pending", "approved", "rejected"],
+      deal_category: [
+        "cloud",
+        "marketing",
+        "analytics",
+        "productivity",
+        "design",
+        "developer-tools",
+        "communication",
+        "finance",
+      ],
+    },
   },
 } as const
